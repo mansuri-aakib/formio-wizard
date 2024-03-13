@@ -28,14 +28,28 @@
   </nav>
 
   <div>
-    <select
-      class="form-control form-select-lg mb-3"
-      name="formMode"
-      (change)="changeMode($event)"
-    >
-      <option value="form" selected>form</option>
-      <option value="wizard">wizard</option>
-    </select>
-    <form-builder [form]="form" [options]="builderOption" (change)="onChange($event)" #builder></form-builder>
+    <div style="display: flex;">
+      <select
+        style="width: 18%;margin-right: 10px;"
+        class="form-control form-select-lg mb-3"
+        name="formMode"
+        (change)="changeMode($event)"
+      >
+        <option value="form" [selected]="this.formMode === 'form'">form</option>
+        <option value="wizard" [selected]="this.formMode === 'wizard'">wizard</option>
+      </select>
+
+      <select
+        class="form-control form-select-lg mb-3"
+        name="FormTitle"
+        (change)="renderTemplate($event)"
+      >
+        <option value="-1" selected>select template</option>
+        <option *ngFor="let form of formTemplates; let i = index" [value]="i">
+          {{ form.title }}
+        </option>
+      </select>
+    </div>
+    <form-builder [form]="form" [options]="builderOption" [rebuild]="rebuiltEmitter" (change)="onChange($event)" #builder></form-builder>
   </div>
 </div>

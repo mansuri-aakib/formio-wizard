@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, ViewChild } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { FormioForm } from '@formio/angular';
 import builder_option from './builder_option';
@@ -10,33 +10,57 @@ import builder_option from './builder_option';
   templateUrl: './builder.component.html',
   styleUrl: './builder.component.css'
 })
-export class BuilderComponent {
-  public form;
+export class BuilderComponent implements AfterViewChecked{
+  public formTemplates!: FormioForm[];
+  public form! : FormioForm;
+  public formMode : any = 'form';
   public builderOption!: {};
+  public rebuiltEmitter:EventEmitter<any> = new EventEmitter();
+  @ViewChild('builder') builderElem:any;
 
   /**
    * Initializes the form object with an empty title and an empty array of components.
    * Initializes the options for the form with sanitization configurations and builder settings.
   */
   constructor() {
-    this.form = {
-      title: '',
-      display:'form',
-      components: [],
-    };
+    this.loadFromLocal();
     this.builderOption = builder_option;
+    this.setForm();
   }
 
   changeMode(event:any){
-    this.form = {
-      title: '',
-      display: event.target.value,
-      components: [],
+    this.formMode = event.target.value;
+    this.setForm();
+  }
+  
+  renderTemplate(event: any) {
+    if (event.target.value == -1) {
+      this.setForm();
+    }
+    else {
+      this.formMode = this.formTemplates[event.target.value].display;
+      this.setForm(this.formTemplates[event.target.value]);
     }
   }
 
+  setForm(form:any={title: '',display: this.formMode,components: []}){
+    this.form = form;
+  }
+
+  loadFromLocal(){
+    let existingData = localStorage.getItem('FormsJson');
+    if (existingData !== null) {
+      this.formTemplates = JSON.parse(existingData);
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    let elem:HTMLElement | null = document.querySelector('.breadcrumb');
+    if(elem !== null)
+      (elem as any).style.backgroundColor = 'black';
+  }
+
   onChange(event: any): void {
-    
     //Removing Syncfusion premium dialogs
     if (event.type === 'updateComponent' && event.component.type === "syncgrid") {
       document
@@ -92,6 +116,7 @@ export class BuilderComponent {
       }
       localStorage.setItem('FormsJson', JSON.stringify(formsJson));
     }
-
+    this.setForm();
+    this.loadFromLocal();
   }
 }
