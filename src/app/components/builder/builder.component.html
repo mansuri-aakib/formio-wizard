@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="text-center header">
+    <h1>Form Builder</h1>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="enter form title"
+          aria-label="title"
+          aria-describedby="basic-addon2"
+          name="Title"
+          [(ngModel)]="form.title"
+        />
+        <button
+          type="button"
+          class="btn btn-primary"
+          style="width: 10%; margin-left: 10px"
+          (click)="onSaveForm()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div>
+    <select
+      class="form-control form-select-lg mb-3"
+      name="formMode"
+      (change)="changeMode($event)"
+    >
+      <option value="form" selected>form</option>
+      <option value="wizard">wizard</option>
+    </select>
+    <form-builder [form]="form" [options]="builderOption" (change)="onChange($event)" #builder></form-builder>
+  </div>
+</div>

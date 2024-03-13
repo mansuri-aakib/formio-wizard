@@ -1,0 +1,9 @@
+.jsonScreen{
+    height: 75vh;
+    overflow: scroll;
+}
+
+.header{
+    width: 77vw;
+}
+

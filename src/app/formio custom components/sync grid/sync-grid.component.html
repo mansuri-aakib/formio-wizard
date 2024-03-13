@@ -1,0 +1,40 @@
+<ejs-grid
+  [dataSource]="data"
+  allowPaging="true"
+  [selectionSettings]="selectionOptions"
+  (rowSelected)="rowSelected($event)"
+>
+  <e-columns>
+    <e-column
+      field="id"
+      headerText="id"
+      textAlign="Right"
+      width="90"
+    ></e-column>
+
+    <e-column
+      field="title"
+      headerText="title"
+      textAlign="Right"
+      width="120"
+    ></e-column>
+    <e-column
+      field="description"
+      headerText="description"
+      textAlign="Right"
+      width="150"
+    ></e-column>
+    <e-column
+      field="price"
+      headerText="price"
+      textAlign="Right"
+      width="120"
+    ></e-column>
+    <e-column
+      field="discountPercentage"
+      headerText="discountPercentage"
+      textAlign="Right"
+      width="120"
+    ></e-column>
+  </e-columns>
+</ejs-grid>

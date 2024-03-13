@@ -18,6 +18,10 @@
     "@angular/platform-browser": "^17.1.0",
     "@angular/platform-browser-dynamic": "^17.1.0",
     "@angular/router": "^17.1.0",
+    "@formio/angular": "^7.0.0",
+    "@formio/js": "^5.0.0-rc.39",
+    "@syncfusion/ej2-angular-grids": "^24.2.9",
+    "bootstrap": "^5.3.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
