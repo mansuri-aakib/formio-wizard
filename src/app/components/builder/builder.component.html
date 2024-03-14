@@ -44,12 +44,12 @@
         name="FormTitle"
         (change)="renderTemplate($event)"
       >
-        <option value="-1" selected>select template</option>
-        <option *ngFor="let form of formTemplates; let i = index" [value]="i">
+        <option value="-1" [selected]="this.selectedFormIndex === -1">select template</option>
+        <option *ngFor="let form of formTemplates; let i = index" [value]="i" [selected]="this.selectedFormIndex === i">
           {{ form.title }}
         </option>
       </select>
     </div>
-    <form-builder [form]="form" [options]="builderOption" [rebuild]="rebuiltEmitter" (change)="onChange($event)" #builder></form-builder>
+    <form-builder [form]="form" [options]="builderOption" (change)="onChange($event)" #builder></form-builder>
   </div>
 </div>
