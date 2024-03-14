@@ -21,6 +21,6 @@ import { FormioModule } from "@formio/angular";
         FormioModule,
         CommonModule,
         HttpClientModule
-    ]
+    ],
 })
 export class SharedModule{}

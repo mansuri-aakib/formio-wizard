@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, OnChanges, inject } from '@angular/core';
 import { SharedModule } from '../../shared.module';
-import { FormioForm } from '@formio/angular';
+import { FormioForm, FormioUtils } from '@formio/angular';
 import builder_option from './builder_option';
+import { GlobalService } from '../../service/global.service';
 
 @Component({
   selector: 'app-builder',
@@ -10,13 +11,14 @@ import builder_option from './builder_option';
   templateUrl: './builder.component.html',
   styleUrl: './builder.component.css'
 })
-export class BuilderComponent{
+export class BuilderComponent implements AfterViewChecked {
   public formTemplates!: FormioForm[];
-  public selectedFormIndex:number;
-  public form! : FormioForm;
-  public formMode : any = 'form';
+  public selectedFormIndex: number;
+  public form!: FormioForm;
+  public formMode: any = 'form';
   public builderOption!: {};
-
+  public service: GlobalService = inject(GlobalService);
+  public url = '';
   /**
    * Initializes the form object with an empty title and an empty array of components.
    * Initializes the options for the form with sanitization configurations and builder settings.
@@ -28,12 +30,21 @@ export class BuilderComponent{
     this.setForm();
   }
 
-  changeMode(event:any){
+  ngAfterViewChecked(): void {
+    FormioUtils.eachComponent((this.form as any).components,(comp:any)=>{
+      if(comp !== undefined && comp?.type === 'CustRenderer' && this.url !== comp?.ApiUrl){
+        this.url = comp.ApiUrl;
+        this.service.get(comp.ApiUrl);
+      }
+    })
+  }
+
+  changeMode(event: any) {
     this.formMode = event.target.value;
     this.selectedFormIndex = -1;
     this.setForm();
   }
-  
+
   renderTemplate(event: any) {
     if (event.target.value == -1) {
       this.selectedFormIndex = -1;
@@ -46,11 +57,11 @@ export class BuilderComponent{
     }
   }
 
-  setForm(form:any={title: '',display: this.formMode,components: []}){
+  setForm(form: any = { title: '', display: this.formMode, components: [] }) {
     this.form = form;
   }
 
-  loadFromLocal(){
+  loadFromLocal() {
     let existingData = localStorage.getItem('FormsJson');
     if (existingData !== null) {
       this.formTemplates = JSON.parse(existingData);

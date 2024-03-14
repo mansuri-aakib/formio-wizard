@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Formio, FormioForm } from '@formio/angular';
+import { Component, OnInit, inject } from '@angular/core';
+import { Formio, FormioForm, FormioUtils } from '@formio/angular';
 import { SharedModule } from '../../shared.module';
+import { GlobalService } from '../../service/global.service';
 
 @Component({
   selector: 'app-renderer',
@@ -15,6 +16,7 @@ export class RendererComponent implements OnInit {
   public submitedTemplate!: {};
   public isTemplateSelected: boolean = false;
   public isDataSubmited: boolean = false;
+  public service:GlobalService = inject(GlobalService);
 
   //load data from local
   ngOnInit(): void {
@@ -57,11 +59,40 @@ export class RendererComponent implements OnInit {
       }
     ).then((form) => {
       form.on('submit',this.onSubmitForm);
+
+      form.on('nextPage',()=>{
+        FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
+          if(comp.type === 'CustRenderer'){
+            this.service.get(comp.ApiUrl);
+          }
+        })
+      });
+
+      form.on('prevPage',()=>{
+        FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
+          if(comp.type === 'CustRenderer'){
+            this.service.get(comp.ApiUrl);
+          }
+        })
+      });
+
+      form.on('change',()=>{
+        FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
+          if(comp.type === 'CustRenderer'){
+            this.service.get(comp.ApiUrl);
+          }
+        })
+      })
+      
+      FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
+        if(comp.type === 'CustRenderer'){
+          this.service.get(comp.ApiUrl);
+        }
+      })
     });
   }
 
   onSubmitForm(formJson: any) {
-    console.log(formJson);
     this.isDataSubmited = true;
     this.submitedTemplate = formJson.data;
   }
