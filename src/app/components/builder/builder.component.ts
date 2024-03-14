@@ -57,7 +57,6 @@ export class BuilderComponent{
     }
   }
 
-
   onChange(event: any): void {
     //Removing Syncfusion premium dialogs
     if (event.type === 'updateComponent' && event.component.type === "syncgrid") {

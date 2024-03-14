@@ -1,6 +1,7 @@
 import { Component, Injector } from '@angular/core';
 import { SharedModule } from './shared.module';
 import { registerSyncGridComponent } from './formio custom components/sync grid/register';
+import { registerCustRendererComponent } from './formio custom components/custom renderer/register';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +14,6 @@ export class AppComponent {
   title = 'formio-wizard';
   constructor(injector:Injector){
     registerSyncGridComponent(injector);
+    registerCustRendererComponent(injector);
   }
 }

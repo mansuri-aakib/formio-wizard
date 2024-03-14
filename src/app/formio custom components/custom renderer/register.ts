@@ -1,16 +1,16 @@
 import { Injector } from '@angular/core';
-import { WizardComp } from './wizard.component';
 import { FormioCustomComponentInfo } from '../formio lib/elements.common';
 import { registerCustomFormioComponent } from '../formio lib/register-custom-component';
+import { CustRenderer } from './cust-renderer.component';
 
 const COMPONENT_OPTIONS: FormioCustomComponentInfo = {
-  type: 'wizard',
-  selector: 'wizard-comp',
-  title: 'Wizard',
+  type: 'CustRenderer',
+  selector: 'cust-renderer',
+  title: 'Custom Renderer',
   group: 'custom',
   icon: 'code',
 };
 
-export function registerWizardComponent(injector: Injector) {
-  registerCustomFormioComponent(COMPONENT_OPTIONS, WizardComp, injector);
+export function registerCustRendererComponent(injector: Injector) {
+  registerCustomFormioComponent(COMPONENT_OPTIONS, CustRenderer, injector);
 }

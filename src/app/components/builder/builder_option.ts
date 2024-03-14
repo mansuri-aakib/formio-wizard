@@ -2,8 +2,8 @@
 export default {
     sanitize:true,
     sanitizeConfig: {
-      allowedTags: ['','sync-grid'],// Specify allowed tags for sanitization
-      addTags: ['','sync-grid'] // Specify additional tags to add during sanitization
+      allowedTags: ['','sync-grid','cust-renderer'],// Specify allowed tags for sanitization
+      addTags: ['','sync-grid','cust-renderer'] // Specify additional tags to add during sanitization
     },
     builder:{
       basic:{

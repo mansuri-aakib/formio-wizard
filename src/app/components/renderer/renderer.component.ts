@@ -51,8 +51,8 @@ export class RendererComponent implements OnInit {
       {
         sanitize: true,
         sanitizeConfig: {
-          allowedTags: ['sync-grid','wizard-comp'],
-          addTags: ['sync-grid','wizard-comp']
+          allowedTags: ['sync-grid','cust-renderer'],
+          addTags: ['sync-grid','cust-renderer']
         }
       }
     ).then((form) => {
