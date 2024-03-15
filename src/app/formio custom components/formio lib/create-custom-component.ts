@@ -52,6 +52,7 @@ export function createCustomFormioComponent(customComponentOptions: FormioCustom
       }
     }
 
+    
     elementInfo() {
       const info = super.elementInfo();
       info.type = customComponentOptions.selector;
@@ -169,5 +170,14 @@ export function createCustomFormioComponent(customComponentOptions: FormioCustom
 
       return clone(defaultValue);
     }
+
+    getValue() {
+      return super.getValue();
+    }
+
+    setValue(value, flags = {}) {
+      return super.setValue(this.component, flags);
+    }
   };
+
 }

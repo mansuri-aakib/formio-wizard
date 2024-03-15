@@ -1,14 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { inject } from "@angular/core";
-import { Subject } from "rxjs";
-
 export class GlobalService {
-    private http: HttpClient = inject(HttpClient);
-    public emitter = new Subject();
+    private formTemplates:any;
 
-    get(url: string) {
-        this.http.get(url).subscribe((res: any) => {
-            this.emitter.next(JSON.parse(res.Body.screenJson));
-        });
+    constructor(){
+        let existingData = localStorage.getItem('FormsJson');
+        if (existingData !== null) {
+          this.formTemplates = JSON.parse(existingData);
+        }
+    }
+
+    get(screenId: any) {
+        return this.formTemplates.filter((temp:any)=>temp.id==screenId);
     }
 }

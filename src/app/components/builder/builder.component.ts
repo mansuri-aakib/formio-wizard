@@ -1,8 +1,7 @@
-import { AfterViewChecked, Component, OnChanges, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { SharedModule } from '../../shared.module';
-import { FormioForm, FormioUtils } from '@formio/angular';
+import { FormioForm } from '@formio/angular';
 import builder_option from './builder_option';
-import { GlobalService } from '../../service/global.service';
 
 @Component({
   selector: 'app-builder',
@@ -11,14 +10,12 @@ import { GlobalService } from '../../service/global.service';
   templateUrl: './builder.component.html',
   styleUrl: './builder.component.css'
 })
-export class BuilderComponent implements AfterViewChecked {
+export class BuilderComponent {
   public formTemplates!: FormioForm[];
   public selectedFormIndex: number;
-  public form!: FormioForm;
+  public form!: any;
   public formMode: any = 'form';
   public builderOption!: {};
-  public service: GlobalService = inject(GlobalService);
-  public url = '';
   /**
    * Initializes the form object with an empty title and an empty array of components.
    * Initializes the options for the form with sanitization configurations and builder settings.
@@ -28,15 +25,6 @@ export class BuilderComponent implements AfterViewChecked {
     this.builderOption = builder_option;
     this.selectedFormIndex = -1;
     this.setForm();
-  }
-
-  ngAfterViewChecked(): void {
-    FormioUtils.eachComponent((this.form as any).components,(comp:any)=>{
-      if(comp !== undefined && comp?.type === 'CustRenderer' && this.url !== comp?.ApiUrl){
-        this.url = comp.ApiUrl;
-        this.service.get(comp.ApiUrl);
-      }
-    })
   }
 
   changeMode(event: any) {
@@ -101,6 +89,7 @@ export class BuilderComponent implements AfterViewChecked {
     let existingData = localStorage.getItem('FormsJson');
 
     if (existingData === null) {
+      this.form.id = Math.floor(Math.random() * (999999 - 100000)) + 100000;
       localStorage.setItem('FormsJson', JSON.stringify([this.form]));
     }
 
@@ -120,6 +109,7 @@ export class BuilderComponent implements AfterViewChecked {
         formsJson[alradyExistFormIndex] = this.form;
       }
       else {
+        this.form.id = Math.floor(Math.random() * (999999 - 100000)) + 100000;
         formsJson.push(this.form);
       }
       localStorage.setItem('FormsJson', JSON.stringify(formsJson));

@@ -14,9 +14,9 @@ let editForm = () => {
       {
         type: 'textfield',
         input: true,
-        key: 'ApiUrl',
-        label: 'Api Url',
-        placeholder: 'Enter Api Url',
+        key: 'screenId',
+        label: 'Screen Id',
+        placeholder: 'Enter Screen Id',
         validate: { required: true },
       },
     ],
@@ -30,7 +30,7 @@ const COMPONENT_OPTIONS: FormioCustomComponentInfo = {
   title: 'Custom Renderer',
   group: 'custom',
   icon: 'code',
-  editForm : editForm
+  editForm : editForm,
 };
 
 export function registerCustRendererComponent(injector: Injector) {

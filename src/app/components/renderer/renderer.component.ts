@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Formio, FormioForm, FormioUtils } from '@formio/angular';
+import { Formio, FormioForm } from '@formio/angular';
 import { SharedModule } from '../../shared.module';
 import { GlobalService } from '../../service/global.service';
 
@@ -59,36 +59,6 @@ export class RendererComponent implements OnInit {
       }
     ).then((form) => {
       form.on('submit',this.onSubmitForm);
-
-      form.on('nextPage',()=>{
-        FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
-          if(comp.type === 'CustRenderer'){
-            this.service.get(comp.ApiUrl);
-          }
-        })
-      });
-
-      form.on('prevPage',()=>{
-        FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
-          if(comp.type === 'CustRenderer'){
-            this.service.get(comp.ApiUrl);
-          }
-        })
-      });
-
-      form.on('change',()=>{
-        FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
-          if(comp.type === 'CustRenderer'){
-            this.service.get(comp.ApiUrl);
-          }
-        })
-      })
-      
-      FormioUtils.eachComponent((form as any).component.components,(comp:any)=>{
-        if(comp.type === 'CustRenderer'){
-          this.service.get(comp.ApiUrl);
-        }
-      })
     });
   }
 
