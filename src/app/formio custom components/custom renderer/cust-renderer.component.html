@@ -1,1 +1,5 @@
-<formio [form]="form"></formio>
+<formio
+  [form]="form"
+  [renderOptions]="rendererOption"
+  (submit)="onSubmitForm($event)"
+></formio>

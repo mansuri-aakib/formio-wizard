@@ -160,7 +160,7 @@ export function createCustomFormioComponent(customComponentOptions: FormioCustom
       return super.getValue();
     }
 
-    setValue(value, flags = {}) {      
+    setValue(value, flags = {}) {    
       return super.setValue(value, flags);
     }
   };

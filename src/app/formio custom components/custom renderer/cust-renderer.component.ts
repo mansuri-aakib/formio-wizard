@@ -4,26 +4,39 @@ import { FormioForm } from "@formio/angular";
 import { GlobalService } from "../../service/global.service";
 
 @Component({
-    selector:'cust-renderer',
-    templateUrl:'./cust-renderer.component.html',
-    standalone:true,
-    imports:[SharedModule]
+    selector: 'cust-renderer',
+    templateUrl: './cust-renderer.component.html',
+    standalone: true,
+    imports: [SharedModule]
 })
-export class CustRenderer implements OnChanges{
-    public form!:FormioForm;
-    public service:GlobalService = inject(GlobalService);
+export class CustRenderer implements OnChanges {
+    public form!: FormioForm;
+    public rendererOption: any;
+    public service: GlobalService = inject(GlobalService);
     @Output() valueChange = new EventEmitter<any>();
-    @Input() value:any;
+    @Input() value: any;
 
-    constructor(){}
-    
+    constructor() {
+        this.rendererOption = {
+            sanitizeConfig: {
+                allowedTags: ['sync-grid', 'cust-renderer'],
+                addTags: ['sync-grid', 'cust-renderer']
+            }
+        }
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
         this.getScreen();
     }
 
-    getScreen(){
-        if(this.value !== undefined && this.value!.screenId !== undefined){
+    getScreen() {
+        console.log(this.value);
+        if (this.value !== undefined && this.value !== null && this.value!.screenId !== null) {
             this.form = this.service.get(this.value.screenId)[0];
         }
+    }
+
+    onSubmitForm(event: any) {
+        console.log("Custom renderer submission: ", event);
     }
 }

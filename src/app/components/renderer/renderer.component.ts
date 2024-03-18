@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Formio, FormioForm } from '@formio/angular';
+import { FormioForm } from '@formio/angular';
 import { SharedModule } from '../../shared.module';
 import { GlobalService } from '../../service/global.service';
 
@@ -12,17 +12,25 @@ import { GlobalService } from '../../service/global.service';
 })
 export class RendererComponent implements OnInit {
   public formTemplates!: FormioForm[];// Array containing form templates retrieved from localstorage.
-  public selectedTemplate!: any;
+  public selectedTemplate!: FormioForm;
   public submitedTemplate!: {};
   public isTemplateSelected: boolean = false;
   public isDataSubmited: boolean = false;
   public service:GlobalService = inject(GlobalService);
+  public rendererOption:any;
 
   //load data from local
   ngOnInit(): void {
     let existingData = localStorage.getItem('FormsJson');
     if (existingData !== null) {
       this.formTemplates = JSON.parse(existingData);
+    }
+
+    this.rendererOption = {
+      sanitizeConfig: {
+        allowedTags: ['sync-grid','cust-renderer'],
+        addTags: ['sync-grid','cust-renderer']
+      }
     }
   }
 
@@ -41,30 +49,14 @@ export class RendererComponent implements OnInit {
       this.isTemplateSelected = true;
       this.isDataSubmited = false;
       this.selectedTemplate = this.formTemplates[event.target.value];
-      this.createForm();
       this.onChange();
     }
   }
   
-  createForm(){
-    Formio.createForm(
-      document.getElementById('formio'),
-      this.selectedTemplate,
-      {
-        sanitize: true,
-        sanitizeConfig: {
-          allowedTags: ['sync-grid','cust-renderer'],
-          addTags: ['sync-grid','cust-renderer']
-        }
-      }
-    ).then((form) => {
-      form.on('submit',this.onSubmitForm);
-    });
-  }
-
-  onSubmitForm(formJson: any) {
+  onSubmitForm(event:any) {
+    console.log("Main submission: ",event);
     this.isDataSubmited = true;
-    this.submitedTemplate = formJson.data;
+    this.submitedTemplate = event.data;
   }
 
   onChange(): void {

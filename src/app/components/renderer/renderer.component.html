@@ -23,7 +23,11 @@
   <hr />
   <div class="row">
     <div class="col">
-      <div id="formio"></div>
+      <formio
+        [form]="selectedTemplate"
+        [renderOptions]="rendererOption"
+        (submit)="onSubmitForm($event)"
+      ></formio>
     </div>
 
     <div class="col jsonScreen">
@@ -41,8 +45,9 @@
             <h4>{{ isDataSubmited ? "Data JSON" : "Template JSON" }}</h4>
           </div>
           <div class="input-group mb-3 mt-3">
-            <pre>{{(isDataSubmited ? submitedTemplate : selectedTemplate) | json }}</pre
-            >
+            <pre>{{
+              (isDataSubmited ? submitedTemplate : selectedTemplate) | json
+            }}</pre>
           </div>
         </div>
       </ng-template>
