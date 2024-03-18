@@ -30,7 +30,6 @@ export class CustRenderer implements OnChanges {
     }
 
     getScreen() {
-        console.log(this.value);
         if (this.value !== undefined && this.value !== null && this.value!.screenId !== null) {
             this.form = this.service.get(this.value.screenId)[0];
         }
