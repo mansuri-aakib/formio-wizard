@@ -152,31 +152,16 @@ export function createCustomFormioComponent(customComponentOptions: FormioCustom
       return this.component.hasOwnProperty('multiple') && this.component.multiple && !this.component.disableMultiValueWrapper;
     }
 
-    get defaultValue() {
-      let defaultValue = this.emptyValue;
-
-      // handle falsy default value
-      if (!isNil(this.component.defaultValue)) {
-        defaultValue = this.component.defaultValue;
-      }
-
-      if (this.component.customDefaultValue && !this.options.preview) {
-        defaultValue = this.evaluate(
-          this.component.customDefaultValue,
-          { value: '' },
-          'value'
-        );
-      }
-
-      return clone(defaultValue);
+    get defaultValue(){
+      return this.component;
     }
 
     getValue() {
       return super.getValue();
     }
 
-    setValue(value, flags = {}) {
-      return super.setValue(this.component, flags);
+    setValue(value, flags = {}) {      
+      return super.setValue(value, flags);
     }
   };
 

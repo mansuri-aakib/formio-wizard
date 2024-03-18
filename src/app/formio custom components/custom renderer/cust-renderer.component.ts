@@ -15,27 +15,15 @@ export class CustRenderer implements OnChanges{
     @Output() valueChange = new EventEmitter<any>();
     @Input() value:any;
 
-    constructor(){
-        console.log('constructor');
-        this.valueChange.subscribe(()=>{
-            console.log('valuechange');
-        })
-    }
+    constructor(){}
     
-    ngOnInit(){
-        console.log('OnInit');
-    }
-
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('ngOnChanges');
         this.getScreen();
     }
 
     getScreen(){
-        console.log('get screen');
         if(this.value !== undefined && this.value!.screenId !== undefined){
             this.form = this.service.get(this.value.screenId)[0];
-            console.log(this.form);
         }
     }
 }
