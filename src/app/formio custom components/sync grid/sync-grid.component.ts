@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import { GridModule, RowSelectEventArgs, SelectionSettingsModel } from "@syncfusion/ej2-angular-grids";
 import { HttpClient } from "@angular/common/http";
+import { SyncGridModule } from "./sync_grid.module";
 
 @Component({
     selector:'sync-grid',
     templateUrl:'./sync-grid.component.html',
     standalone:true,
-    imports:[GridModule]
+    imports:[SyncGridModule]
 })
 export class SyncGrid{
     /**

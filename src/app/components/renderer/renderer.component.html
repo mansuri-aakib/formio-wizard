@@ -28,17 +28,21 @@
 
   <div class="row">
     <div class="col">
-      <formio
+      <!-- <formio
         [form]="form"
         [renderOptions]="rendererOption"
         [submission]="formSubmission"
         (change)="rendererService.onChange($event)"
         (formLoad)="rendererService.onFormLoad($event)"
         (submit)="rendererService.onSubmit($event)"
-      ></formio>
+      ></formio> -->
+      
+      <formio-main-renderer
+      [screenId]="screenId"
+      ></formio-main-renderer>
     </div>
 
-    <div class="col jsonScreen">
+    <!-- <div class="col jsonScreen">
       <ng-container
         *ngIf="isTemplateSelected; then selectedJsonRef; else emptyJsonRef"
       ></ng-container>
@@ -57,6 +61,6 @@
           </div>
         </div>
       </ng-template>
-    </div>
+    </div> -->
   </div>
 </div>

@@ -1,7 +1,9 @@
 export class GlobalFetchingService {
     private formTemplates:any;
 
-    constructor(){
+    constructor(){}
+
+    private fetchFromLocal(){
         let existingData = localStorage.getItem('FormsJson');
         if (existingData !== null) {
           this.formTemplates = JSON.parse(existingData);
@@ -9,6 +11,7 @@ export class GlobalFetchingService {
     }
 
     get(screenId: any) {
+        this.fetchFromLocal();
         return this.formTemplates.filter((temp:any)=>temp.id==screenId);
     }
 }

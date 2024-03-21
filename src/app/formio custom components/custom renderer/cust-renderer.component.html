@@ -1,7 +1,12 @@
-<formio
+<!-- <formio
   [form]="rendererService.form"
   [renderOptions]="rendererService.rendererOption"
   [submission]="formSubmission"
   (submit)="rendererService.onSubmit($event)"
   (formLoad)="rendererService.onFormLoad($event)"
-></formio>
+></formio> -->
+
+<formio-main-renderer 
+[screenId]="screenId"
+(onSubmitEvent)="changeValue($event)"
+></formio-main-renderer>
