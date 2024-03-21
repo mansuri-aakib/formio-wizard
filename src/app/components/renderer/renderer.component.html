@@ -10,23 +10,31 @@
         <select
           class="form-control form-select-lg mb-3"
           name="FormTitle"
-          (change)="renderTemplate($event)"
+          (change)="onSelectTemplate($event)"
         >
           <option value="-1" selected>select template</option>
-          <option *ngFor="let form of formTemplates; let i = index" [value]="i">
+          <option
+            *ngFor="let form of formTemplates; let i = index"
+            [value]="form.id"
+          >
             {{ form.title }}
           </option>
         </select>
       </div>
     </div>
   </div>
+
   <hr />
+
   <div class="row">
     <div class="col">
       <formio
-        [form]="selectedTemplate"
+        [form]="form"
         [renderOptions]="rendererOption"
-        (submit)="onSubmitForm($event)"
+        [submission]="formSubmission"
+        (change)="rendererService.onChange($event)"
+        (formLoad)="rendererService.onFormLoad($event)"
+        (submit)="rendererService.onSubmit($event)"
       ></formio>
     </div>
 
@@ -45,9 +53,7 @@
             <h4>{{ isDataSubmited ? "Data JSON" : "Template JSON" }}</h4>
           </div>
           <div class="input-group mb-3 mt-3">
-            <pre>{{
-              (isDataSubmited ? submitedTemplate : selectedTemplate) | json
-            }}</pre>
+            <pre>{{ (isDataSubmited ? submitedTemplate : form) | json }}</pre>
           </div>
         </div>
       </ng-template>

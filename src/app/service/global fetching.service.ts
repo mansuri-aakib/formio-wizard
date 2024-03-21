@@ -1,4 +1,4 @@
-export class GlobalService {
+export class GlobalFetchingService {
     private formTemplates:any;
 
     constructor(){

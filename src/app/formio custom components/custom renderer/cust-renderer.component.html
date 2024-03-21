@@ -1,5 +1,7 @@
 <formio
-  [form]="form"
-  [renderOptions]="rendererOption"
-  (submit)="onSubmitForm($event)"
+  [form]="rendererService.form"
+  [renderOptions]="rendererService.rendererOption"
+  [submission]="formSubmission"
+  (submit)="rendererService.onSubmit($event)"
+  (formLoad)="rendererService.onFormLoad($event)"
 ></formio>

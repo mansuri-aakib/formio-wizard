@@ -1,25 +1,38 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormioForm } from '@formio/angular';
+import { Component, inject } from '@angular/core';
 import { SharedModule } from '../../shared.module';
-import { GlobalService } from '../../service/global.service';
+import { RendererDirective } from '../../directives/renderer.directive';
+import { RendererService } from '../../service/global renderer.service';
 
 @Component({
   selector: 'app-renderer',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, RendererDirective],
+  providers:[RendererService],
   templateUrl: './renderer.component.html',
   styleUrl: './renderer.component.css'
 })
-export class RendererComponent implements OnInit {
-  public formTemplates!: FormioForm[];// Array containing form templates retrieved from localstorage.
-  public selectedTemplate!: FormioForm;
+export class RendererComponent {
+  public formTemplates: any;// Array containing form templates retrieved from localstorage.
+  public form:any;
   public submitedTemplate!: {};
   public isTemplateSelected: boolean = false;
   public isDataSubmited: boolean = false;
-  public service:GlobalService = inject(GlobalService);
   public rendererOption:any;
+  public formSubmission:any;
+  public rendererService:RendererService = inject(RendererService);
 
-  //load data from local
+  constructor(){
+    this.rendererService.loadFormSubmission.subscribe((submission:any)=>{
+      this.formSubmission = {data:submission};
+    });
+    
+    this.rendererService.submitForm.subscribe((event:any)=>{
+      this.isDataSubmited = true;
+      this.submitedTemplate = event.data;
+    })
+  }
+
+
   ngOnInit(): void {
     let existingData = localStorage.getItem('FormsJson');
     if (existingData !== null) {
@@ -34,31 +47,18 @@ export class RendererComponent implements OnInit {
     }
   }
 
-  /**
-   * Renders the selected template based on the event value.
-   * - If the value is -1, sets the isTemplateSelected flag to false.
-   * - Otherwise, sets the isTemplateSelected flag to true, resets the isDataSubmited flag,
-   *   and renders the selected template using Formio.createForm.
-   * @param event The event object containing the target value.
-  */
-  renderTemplate(event: any) {
+  onSelectTemplate(event: any) {
     if (event.target.value == -1) {
       this.isTemplateSelected = false;
     }
     else {
+      this.form= this.rendererService.onTemplateSelectEvent(event.target.value);
       this.isTemplateSelected = true;
       this.isDataSubmited = false;
-      this.selectedTemplate = this.formTemplates[event.target.value];
       this.onChange();
     }
   }
   
-  onSubmitForm(event:any) {
-    console.log("Main submission: ",event);
-    this.isDataSubmited = true;
-    this.submitedTemplate = event.data;
-  }
-
   onChange(): void {
     // Removing Syncfusion premium dialog
     document
@@ -78,4 +78,5 @@ export class RendererComponent implements OnInit {
       });
 
   }
+  
 }

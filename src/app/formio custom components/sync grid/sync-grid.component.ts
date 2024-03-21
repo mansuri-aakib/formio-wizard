@@ -18,7 +18,8 @@ export class SyncGrid{
     public selectionOptions?: SelectionSettingsModel = { mode: 'Row',  type: 'Single' };
     public client:HttpClient = inject(HttpClient);
     public url='https://dummyjson.com/products';
-    
+    @Output() valueChange = new EventEmitter<any>();
+    @Input() value: any;
 
     // API request 
     constructor(){
@@ -27,14 +28,10 @@ export class SyncGrid{
         });
     }
 
-    @Output() valueChange = new EventEmitter<any>();
-    @Input()
-    public set value(v:any){
-    }
-
     rowSelected(args: RowSelectEventArgs): void {
-        this.value = args.data;
-        this.valueChange.emit(args.data);
-        alert(`selected data: ${JSON.stringify(args.data)}`);
+        this.value = (args.data as any).title;
+        this.valueChange.emit(this.value);
+        // console.log(this.value);
+        // alert(`selected data: ${JSON.stringify(args.data)}`);
     }
 }
