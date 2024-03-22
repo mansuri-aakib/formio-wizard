@@ -6,3 +6,13 @@ ol.breadcrumb.wizard-pages > li > span{
     color: #212529;
 
 }
+
+.box-border{
+    border: 1px solid black;
+    padding: 15px;
+}
+
+.box-margin{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

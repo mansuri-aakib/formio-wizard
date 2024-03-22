@@ -1,7 +1,21 @@
 <formio
+  #instance
   [form]="form"
   [renderOptions]="rendererOption"
   [submission]="formSubmission"
   (submit)="OnSubmit($event)"
   (formLoad)="onFormLoad($event)"
+  (beforeSubmit)="onBeforeSubmit($event)"
+  (change)="onChange($event)"
+  (nextPage)="onNextPage($event)"
+  (prevPage)="onPrevPage($event)"
+  (ready)="onReady($event)"
+  (render)="onRender()"
+  (submissionLoad)="onSubmissionLoad($event)"
 ></formio>
+<!-- <formio
+#formioInstsnvr
+  [form]="form"
+  [renderOptions]="rendererOption"
+  (submit)="OnSubmit($event)"
+></formio> -->

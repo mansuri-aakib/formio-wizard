@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { BuilderInfo, Components, ExtendedComponentSchema, Utils as FormioUtils } from 'formiojs';
 import { FormioCustomComponentInfo, FormioCustomElement, FormioEvent } from './elements.common';
-import { clone, isNil, isArray } from 'lodash';
+import { isArray } from 'lodash';
 
 const BaseInputComponent = Components.components.input;
 const TextfieldComponent = Components.components.textfield;
