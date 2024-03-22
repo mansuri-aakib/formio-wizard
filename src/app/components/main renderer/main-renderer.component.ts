@@ -105,10 +105,6 @@ export class MainRendererComponent implements OnChanges {
 
   onChange(event: any) {
     // console.log("change: ", event);
-    if(this.formSubmissionLoad && this.formSubmission != undefined &&this.formSubmission != this.mainSubmission){
-      this.mainSubmission = this.formSubmission;
-      console.log(this.formSubmission)
-    }
 
     if (this.formSubmission != event.data) {
       // console.log('change event',event);
