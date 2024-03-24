@@ -60,6 +60,9 @@ export class MainRendererComponent implements OnChanges {
 
   OnSubmit(event: any) {
     console.log('submit', event);
+    let submission = this.instance.formio._data;
+    console.log('_data', submission);
+    
     // Object.keys(event.data).forEach(key => {
     //   if(key == 'Custom Renderer Login Screen')
     //   {
@@ -67,7 +70,6 @@ export class MainRendererComponent implements OnChanges {
     //   }
     //   console.log(`${key}: `, FormioUtils.getValue(event,key));
     // });
-
     let { submit, ...data } = event.data;
     data = { ...data, id: this.form.id };
 
@@ -104,9 +106,10 @@ export class MainRendererComponent implements OnChanges {
   }
 
   onChange(event: any) {
-    // console.log("change: ", event);
-
-    if (this.formSubmission != event.data) {
+    // console.log(this.instance.formio._data);
+    // console.log("change: ", event);    
+    // if (this.formSubmission != event.data) {
+    // if (this.formSubmission != event.data && this.instance.submission?.data !== undefined) {
       // console.log('change event',event);
       // console.log('change event',{key: event?.changed?.component?.key, value:event?.changed?.value});
       // this.onChangeEvent.emit({ 
@@ -114,8 +117,11 @@ export class MainRendererComponent implements OnChanges {
       //                           value: event?.changed?.value, 
       //                           instance: this.instance 
       //                         });
-      this.onChangeEvent.emit(event.data);
-    }
+      // this.onChangeEvent.emit(event.data);
+      // console.log(this.instance.event.emit('submit'));
+      
+      // this.onChangeEvent.emit(this.instance.submission.data);
+    // }
     // debugger
     // this.formSubmission = {data:event.data};
   }

@@ -153,7 +153,7 @@ export function createCustomFormioComponent(customComponentOptions: FormioCustom
     }
 
     get defaultValue(){
-      return this.component;
+      return {component:this.component};
     }
 
     getValue() {
